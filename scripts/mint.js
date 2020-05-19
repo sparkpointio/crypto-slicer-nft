@@ -6,7 +6,7 @@ const FACTORY_CONTRACT_ADDRESS = process.env.FACTORY_CONTRACT_ADDRESS
 const NFT_CONTRACT_ADDRESS = process.env.NFT_CONTRACT_ADDRESS
 const OWNER_ADDRESS = process.env.OWNER_ADDRESS
 const NETWORK = process.env.NETWORK
-const NUM_CREATURES = 12
+const NUM_CRYPTO_SLICERS = 250
 const NUM_LOOTBOXES = 4
 const DEFAULT_OPTION_ID = 0
 const LOOTBOX_OPTION_ID = 2
@@ -59,18 +59,18 @@ async function main() {
     if (NFT_CONTRACT_ADDRESS) {
         const nftContract = new web3Instance.eth.Contract(NFT_ABI, NFT_CONTRACT_ADDRESS, { gasLimit: "1000000" })
 
-        // Creatures issued directly to the owner.
-        for (var i = 0; i < NUM_CREATURES; i++) {
+        // Crypto Slicers issued directly to the owner.
+        for (var i = 0; i < NUM_CRYPTO_SLICERS; i++) {250
             const result = await nftContract.methods.mintTo(OWNER_ADDRESS).send({ from: OWNER_ADDRESS })
-            console.log("Minted creature. Transaction: " + result.transactionHash)
+            console.log("Minted crypto slicer. Transaction: " + result.transactionHash)
         }
     } else if (FACTORY_CONTRACT_ADDRESS) {
         const factoryContract = new web3Instance.eth.Contract(FACTORY_ABI, FACTORY_CONTRACT_ADDRESS, { gasLimit: "1000000" })
 
-        // Creatures issued directly to the owner.
-        for (var i = 0; i < NUM_CREATURES; i++) {
+        // Crypto Slicers issued directly to the owner.
+        for (var i = 0; i < NUM_CRYPTO_SLICERS; i++) {250
             const result = await factoryContract.methods.mint(DEFAULT_OPTION_ID, OWNER_ADDRESS).send({ from: OWNER_ADDRESS })
-            console.log("Minted creature. Transaction: " + result.transactionHash)
+            console.log("Minted crypto slicer. Transaction: " + result.transactionHash)
         }
 
         // Lootboxes issued directly to the owner.

@@ -2,11 +2,11 @@ pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Factory.sol";
-import "./Creature.sol";
-import "./CreatureLootBox.sol";
+import "./CryptoSlicer.sol";
+import "./CryptoSlicerLootBox.sol";
 import "./Strings.sol";
 
-contract CreatureFactory is Factory, Ownable {
+contract CryptoSlicerFactory is Factory, Ownable {
   using Strings for string;
 
   event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
@@ -14,36 +14,36 @@ contract CreatureFactory is Factory, Ownable {
   address public proxyRegistryAddress;
   address public nftAddress;
   address public lootBoxNftAddress;
-  string public baseURI = "https://opensea-creatures-api.herokuapp.com/api/factory/";
+  string public baseURI = "https://sparkpointio.github.io/api/game/cryptoslicer/factory/";
 
   /**
-   * Enforce the existence of only 100 OpenSea creatures.
+   * Enforce the existence of only 5500 Crypto Slicers.
    */
-  uint256 CREATURE_SUPPLY = 100;
+  uint256 CRYPTO_SLICER_SUPPLY = 5500;
 
   /**
-   * Three different options for minting Creatures (basic, premium, and gold).
+   * Three different options for minting Crypto Slicers (basic, premium, and gold).
    */
   uint256 NUM_OPTIONS = 3;
-  uint256 SINGLE_CREATURE_OPTION = 0;
-  uint256 MULTIPLE_CREATURE_OPTION = 1;
+  uint256 SINGLE_CRYPTO_SLICER_OPTION = 0;
+  uint256 MULTIPLE_CRYPTO_SLICER_OPTION = 1;
   uint256 LOOTBOX_OPTION = 2;
-  uint256 NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION = 4;
+  uint256 NUM_CRYPTO_SLICERS_IN_MULTIPLE_CRYPTO_SLICER_OPTION = 4;
 
   constructor(address _proxyRegistryAddress, address _nftAddress) public {
     proxyRegistryAddress = _proxyRegistryAddress;
     nftAddress = _nftAddress;
-    lootBoxNftAddress = address(new CreatureLootBox(_proxyRegistryAddress, address(this)));
+    lootBoxNftAddress = address(new CryptoSlicerLootBox(_proxyRegistryAddress, address(this)));
 
     fireTransferEvents(address(0), owner());
   }
 
   function name() external view returns (string memory) {
-    return "OpenSeaCreature Item Sale";
+    return "SparkPoint Crypto Slicer Item Sale";
   }
 
   function symbol() external view returns (string memory) {
-    return "CPF";
+    return "CSF";
   }
 
   function supportsFactoryInterface() public view returns (bool) {
@@ -72,16 +72,16 @@ contract CreatureFactory is Factory, Ownable {
     assert(address(proxyRegistry.proxies(owner())) == msg.sender || owner() == msg.sender || msg.sender == lootBoxNftAddress);
     require(canMint(_optionId));
 
-    Creature openSeaCreature = Creature(nftAddress);
-    if (_optionId == SINGLE_CREATURE_OPTION) {
-      openSeaCreature.mintTo(_toAddress);
-    } else if (_optionId == MULTIPLE_CREATURE_OPTION) {
-      for (uint256 i = 0; i < NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION; i++) {
-        openSeaCreature.mintTo(_toAddress);
+    CryptoSlicer cryptoSlicer = CryptoSlicer(nftAddress);
+    if (_optionId == SINGLE_CRYPTO_SLICER_OPTION) {
+      cryptoSlicer.mintTo(_toAddress);
+    } else if (_optionId == MULTIPLE_CRYPTO_SLICER_OPTION) {
+      for (uint256 i = 0; i < NUM_CRYPTO_SLICERS_IN_MULTIPLE_CRYPTO_SLICER_OPTION; i++) {
+        cryptoSlicer.mintTo(_toAddress);
       }
     } else if (_optionId == LOOTBOX_OPTION) {
-      CreatureLootBox openSeaCreatureLootBox = CreatureLootBox(lootBoxNftAddress);
-      openSeaCreatureLootBox.mintTo(_toAddress);
+      CryptoSlicerLootBox cryptoSlicerLootBox = CryptoSlicerLootBox(lootBoxNftAddress);
+      cryptoSlicerLootBox.mintTo(_toAddress);
     }
   }
 
@@ -90,19 +90,19 @@ contract CreatureFactory is Factory, Ownable {
       return false;
     }
 
-    Creature openSeaCreature = Creature(nftAddress);
-    uint256 creatureSupply = openSeaCreature.totalSupply();
+    CryptoSlicer cryptoSlicer = CryptoSlicer(nftAddress);
+    uint256 cryptoSlicerSupply = cryptoSlicer.totalSupply();
 
     uint256 numItemsAllocated = 0;
-    if (_optionId == SINGLE_CREATURE_OPTION) {
+    if (_optionId == SINGLE_CRYPTO_SLICER_OPTION) {
       numItemsAllocated = 1;
-    } else if (_optionId == MULTIPLE_CREATURE_OPTION) {
-      numItemsAllocated = NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION;
+    } else if (_optionId == MULTIPLE_CRYPTO_SLICER_OPTION) {
+      numItemsAllocated = NUM_CRYPTO_SLICERS_IN_MULTIPLE_CRYPTO_SLICER_OPTION;
     } else if (_optionId == LOOTBOX_OPTION) {
-      CreatureLootBox openSeaCreatureLootBox = CreatureLootBox(lootBoxNftAddress);
-      numItemsAllocated = openSeaCreatureLootBox.itemsPerLootbox();
+      CryptoSlicerLootBox cryptoSlicerLootBox = CryptoSlicerLootBox(lootBoxNftAddress);
+      numItemsAllocated = cryptoSlicerLootBox.itemsPerLootbox();
     }
-    return creatureSupply < (CREATURE_SUPPLY - numItemsAllocated);
+    return cryptoSlicerSupply < (CRYPTO_SLICER_SUPPLY - numItemsAllocated);
   }
 
   function tokenURI(uint256 _optionId) external view returns (string memory) {
