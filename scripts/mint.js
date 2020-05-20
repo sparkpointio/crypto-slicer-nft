@@ -60,7 +60,7 @@ async function main() {
         const nftContract = new web3Instance.eth.Contract(NFT_ABI, NFT_CONTRACT_ADDRESS, { gasLimit: "1000000" })
 
         // Crypto Slicers issued directly to the owner.
-        for (var i = 0; i < NUM_CRYPTO_SLICERS; i++) {250
+        for (var i = 0; i < NUM_CRYPTO_SLICERS; i++) {
             const result = await nftContract.methods.mintTo(OWNER_ADDRESS).send({ from: OWNER_ADDRESS })
             console.log("Minted crypto slicer. Transaction: " + result.transactionHash)
         }
@@ -68,7 +68,7 @@ async function main() {
         const factoryContract = new web3Instance.eth.Contract(FACTORY_ABI, FACTORY_CONTRACT_ADDRESS, { gasLimit: "1000000" })
 
         // Crypto Slicers issued directly to the owner.
-        for (var i = 0; i < NUM_CRYPTO_SLICERS; i++) {250
+        for (var i = 0; i < NUM_CRYPTO_SLICERS; i++) {
             const result = await factoryContract.methods.mint(DEFAULT_OPTION_ID, OWNER_ADDRESS).send({ from: OWNER_ADDRESS })
             console.log("Minted crypto slicer. Transaction: " + result.transactionHash)
         }
