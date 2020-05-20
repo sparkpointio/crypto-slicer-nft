@@ -1,6 +1,6 @@
-## SparkPoint Crypto Slicers ERC721 contracts
+## SparkPoint Crypto Slicer ERC721 contracts
 
-### About SparkPoint Crypto Slicers
+### About SparkPoint Crypto Slicer
 
 This is a very simple ERC721 contract based on [OpenSea](https://opensea.io)'s Creature contracts example. We include a script for minting the items.
 
