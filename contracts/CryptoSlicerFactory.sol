@@ -17,9 +17,9 @@ contract CryptoSlicerFactory is Factory, Ownable {
   string public baseURI = "https://sparkpointio.github.io/api/game/cryptoslicer/factory/";
 
   /**
-   * Enforce the existence of only 5500 Crypto Slicers.
+   * Enforce the existence of only 30000 Crypto Slicers.
    */
-  uint256 CRYPTO_SLICER_SUPPLY = 5500;
+  uint256 CRYPTO_SLICER_SUPPLY = 30000;
 
   /**
    * Three different options for minting Crypto Slicers (basic, premium, and gold).
